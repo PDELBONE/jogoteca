@@ -1,0 +1,5 @@
+No terminal digitar:
+
+1 - mysql -u root -p
+2 - Digitar a senha
+3 - show databases
