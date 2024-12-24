@@ -16,9 +16,9 @@ from views_user import *
 
 if __name__ == "__main__":
     #A aplicação roda apenas na máquina local
-    app.run(debug=True)
+    #app.run(debug=True)
     #É permitido acessos externos à aplicação
-    #app.run(debug=True, host='0.0.0.0', port=8080)
+    app.run(debug=True, host='0.0.0.0', port=10000)
 
 
 
