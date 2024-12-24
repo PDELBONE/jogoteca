@@ -1,23 +1,20 @@
-# 16/11/2024
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from flask_wtf.csrf import CSRFProtect
-from flask_bcrypt import Bcrypt
+from dotenv import load_dotenv
+from pymongo import MongoClient
+import os
+
+load_dotenv()
 
 app = Flask(__name__)
-app.config.from_pyfile('config.py')
 
-db = SQLAlchemy(app)
-csrf = CSRFProtect(app)
-bcrypt = Bcrypt(app)
+client = MongoClient(os.getenv("MONGODB_URI"))
+db = client["jogoteca"]
+collection = db["jogos"]
 
 from views_game import *
 from views_user import *
 
 if __name__ == "__main__":
-    #A aplicação roda apenas na máquina local
-    #app.run(debug=True)
-    #É permitido acessos externos à aplicação
     app.run(debug=True, host='0.0.0.0', port=10000)
 
 

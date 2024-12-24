@@ -1,8 +1,11 @@
 from flask import render_template, request, redirect, session, flash, url_for, send_from_directory
-from jogoteca import app, db
+from pymongo import MongoClient
+import os
+from jogoteca import app, db, collection
 from models import Jogos
 from helpers import recupera_imagem, deleta_arquivo, FormularioJogo
 import time
+
 
 @app.route('/')
 def index():
@@ -33,9 +36,13 @@ def criar():
         flash('Jogo já existente!')
         return redirect(url_for('index'))
 
-    novo_jogo = Jogos(nome=nome, categoria=categoria, console=console)
-    db.session.add(novo_jogo)
-    db.session.commit()
+    novo_jogo = {
+        "nome": nome,
+        "categoria": categoria,
+        "console": console
+    }
+    result = collection.insert_one(novo_jogo)
+    print(result.inserted_id)
 
     arquivo = request.files['arquivo']
     upload_path = app.config['UPLOAD_PATH']
